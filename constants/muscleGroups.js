@@ -1,0 +1,20 @@
+// constants/muscleGroups.js
+module.exports = [
+  "Chest",
+  "Front Delts",
+  "Rear Delts",
+  "Side Delts",
+  "Biceps",
+  "Triceps",
+  "Forearms",
+  "Lats",
+  "Upper Back",
+  "Lower Back",
+  "Traps",
+  "Abs",
+  "Obliques",
+  "Quads",
+  "Hamstrings",
+  "Glutes",
+  "Calves",
+];
