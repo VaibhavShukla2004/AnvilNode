@@ -1,5 +1,5 @@
 // constants/muscleGroups.js
-module.exports = [
+const muscleGroups = [
   "Chest",
   "Front Delts",
   "Rear Delts",
@@ -18,3 +18,20 @@ module.exports = [
   "Glutes",
   "Calves",
 ];
+
+const primaryMuscleGroups = [
+  "Chest",
+  "Shoulders",
+  "Back",
+  "Biceps",
+  "Triceps",
+  "Forearms",
+  "Abs",
+  "Legs",
+  "Calves",
+];
+
+module.exports = { 
+    muscleGroups,
+    primaryMuscleGroups
+};
