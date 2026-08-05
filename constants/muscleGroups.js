@@ -1,45 +1,47 @@
-// constants/muscleGroups.js
-const muscleGroups = [
-  "Upper Chest",
-  "Lower Chest",
-  "Middle Chest",
-  "Front Delts",
-  "Rear Delts",
-  "Side Delts",
-  "Biceps",
-  "Tricep Long Head",
-  "Tricep Lateral Head",
-  "Tricep Medial Head",
-  "Brachioradialis",
-  "Forearm Flexors",
-  "Forearm Extensors",
-  "Upper Lats",
-  "Lower Lats",
-  "Upper Back",
-  "Lower Back",
-  "Traps",
-  "Upper abs",
-  "Lower abs",
-  "Obliques",
-  "Quads",
-  "Hamstrings",
-  "Glutes",
-  "Calves",
-];
+const muscleGroups = {
+  upperChest: "Upper Chest",
+  middleChest: "Middle Chest",
+  lowerChest: "Lower Chest",
 
-const primaryMuscleGroups = [
-  "Chest",
-  "Shoulders",
-  "Back",
-  "Biceps",
-  "Triceps",
-  "Forearms",
-  "Abs",
-  "Legs",
-  "Calves",
-];
+  frontDelts: "Front Delts",
+  sideDelts: "Side Delts",
+  rearDelts: "Rear Delts",
 
-module.exports = { 
-    muscleGroups,
-    primaryMuscleGroups
+  biceps: "Biceps",
+
+  tricepLongHead: "Tricep Long Head",
+  tricepLateralHead: "Tricep Lateral Head",
+  tricepMedialHead: "Tricep Medial Head",
+
+  brachioradialis: "Brachioradialis",
+  forearmFlexors: "Forearm Flexors",
+  forearmExtensors: "Forearm Extensors",
+
+  upperLats: "Upper Lats",
+  lowerLats: "Lower Lats",
+  upperBack: "Upper Back",
+  lowerBack: "Lower Back",
+  traps: "Traps",
+
+  upperAbs: "Upper Abs",
+  lowerAbs: "Lower Abs",
+  obliques: "Obliques",
+
+  quads: "Quads",
+  hamstrings: "Hamstrings",
+  glutes: "Glutes",
+  calves: "Calves",
 };
+
+const primaryMuscleGroups = {
+  chest: "Chest",
+  shoulders: "Shoulders",
+  back: "Back",
+  biceps: "Biceps",
+  triceps: "Triceps",
+  forearms: "Forearms",
+  core: "Core",
+  legs: "Legs",
+};
+
+module.exports = { muscleGroups, primaryMuscleGroups };
