@@ -1,33 +1,48 @@
-Workout - Exercise - Muscle Group,Equipment 
-(Workout is a collection of exercises, exercises has a list of muscle groups and equipment needed)
+# AnvilNode
 
-Basic Schemas 
-Follow the pattern - name, description, constraints/remarks
+AnvilNode is an exercise and workout API centered around workouts, exercises, muscle groups, and equipment.
 
-Workout 
-    1.name 
-    2.muscle Groups, list of muscle groups targeted by this workout, FK - Muscle Group
-    3.exerciseList, list of exercises in the workout mapped to sets 
-        Eg: Push : (Push-Ups: 3, Shoulder Press : 2, Lateral Raise: 2)
-    4.noOfExercises, no of Exercises
-    5.isPremade, a boolean that tells if workout belongs to user or is preMade
+## Data model
 
-Exercise 
-    1.Name
-    2.Primary Muscle Group, Main Muscle Group, (FK - Muscle Group)
-    3.Muscle Groups, A mapping between the muscle groups and the weightage of each muscle group (weightage bw 0,1), Muscle group FK 
-      eg: for push Ups - (Chest : 0.6, Shoulders : 0.3, Triceps: 0.2)
-    4.ImageUrl, url of the image of the exercise 
-    5.Equipment, list of equipment needed, FK - Equipment
+### Workout
 
-MuscleGroup
-    1.Name
-    2.ImageUrl, url of image of muscle 
+A workout is a collection of exercises.
 
-Equipment 
-    1.Name
-    2.ImageUrl, url of Image of Equipment 
+| Field | Description | Constraints / remarks |
+|---|---|---|
+| `name` | Name of the workout. | |
+| `muscleGroups` | Muscle groups targeted by the workout. | References muscle groups. |
+| `exerciseList` | Exercises included in the workout, mapped to their set counts. | Example: Push-Ups (3 sets), Shoulder Press (2 sets), Lateral Raise (2 sets). |
+| `noOfExercises` | Number of exercises in the workout. | |
+| `isPremade` | Indicates whether the workout is a premade workout or belongs to a user. | Boolean. |
+
+### Exercise
+
+An exercise can target multiple muscle groups and may require equipment.
+
+| Field | Description | Constraints / remarks |
+|---|---|---|
+| `name` | Name of the exercise. | |
+| `primaryMuscleGroup` | Main muscle group targeted by the exercise. | References a muscle group. |
+| `muscleGroups` | Muscle groups targeted by the exercise and their relative weightings. | Each weighting is between `0` and `1`. Example: Push-Ups — Chest (`0.6`), Shoulders (`0.3`), Triceps (`0.2`). |
+| `imageUrl` | URL of an image for the exercise. | |
+| `equipment` | Equipment required for the exercise. | References one or more equipment records. |
+
+### Muscle group
+
+| Field | Description | Constraints / remarks |
+|---|---|---|
+| `name` | Name of the muscle group. | |
+| `imageUrl` | URL of an image for the muscle group. | |
+
+### Equipment
+
+| Field | Description | Constraints / remarks |
+|---|---|---|
+| `name` | Name of the equipment. | |
+| `imageUrl` | URL of an image for the equipment. | |
 
 
+## Algorithm
 
-
+## Authentication / Authorization Levels
