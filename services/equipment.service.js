@@ -1,29 +1,59 @@
-const Equipment = require('../models/equipment.model');
+import db from "../config/db.js";
 
-class EquipmentService {
+const equipmentService = {
   async create(data) {
-    const equipment = new Equipment(data);
-    return await equipment.save();
-  }
+    const { name, imageUrl } = data;
+
+    const result = await db.query(
+      `INSERT INTO equipment (name, image_url)
+       VALUES ($1, $2)
+       RETURNING *`,
+      [name, imageUrl ?? null]
+    );
+
+    return result.rows[0];
+  },
 
   async getAll() {
-    return await Equipment.find({});
-  }
+    const result = await db.query(
+      "SELECT * FROM equipment ORDER BY id"
+    );
+
+    return result.rows;
+  },
 
   async getById(id) {
-    return await Equipment.findById(id);
-  }
+    const result = await db.query(
+      "SELECT * FROM equipment WHERE id = $1",
+      [id]
+    );
+
+    return result.rows[0] ?? null;
+  },
 
   async updateById(id, data) {
-    return await Equipment.findByIdAndUpdate(id, data, {
-      new: true,
-      runValidators: true,
-    });
-  }
+    const { name, imageUrl } = data;
+
+    const result = await db.query(
+      `UPDATE equipment
+       SET name = COALESCE($1, name),
+           image_url = COALESCE($2, image_url)
+       WHERE id = $3
+       RETURNING *`,
+      [name ?? null, imageUrl ?? null, id]
+    );
+
+    return result.rows[0] ?? null;
+  },
 
   async deleteById(id) {
-    return await Equipment.findByIdAndDelete(id);
-  }
-}
+    const result = await db.query(
+      "DELETE FROM equipment WHERE id = $1 RETURNING *",
+      [id]
+    );
 
-module.exports = new EquipmentService();
+    return result.rows[0] ?? null;
+  },
+};
+
+export default equipmentService;
