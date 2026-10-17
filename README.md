@@ -46,3 +46,12 @@ An exercise can target multiple muscle groups and may require equipment.
 ## Algorithm
 
 ## Authentication / Authorization Levels
+
+### Admin
+can use all methods
+
+### User (Logged In)
+can create upto 10 workouts 
+
+### User (Not Logged In)
+can only create one workout (temporary, will disappear if page reloaded)
