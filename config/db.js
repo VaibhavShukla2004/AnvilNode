@@ -1,26 +1,53 @@
-const mongoose = require("mongoose");
-const uri = process.env.MONGO_URI;
+import { neon } from '@neondatabase/serverless';
 
-const clientOptions = {
-    serverApi: {
-        version: '1',
-        strict: true,
-        deprecationErrors: true
-    }
-};
+async function setup() {
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    throw new Error('DATABASE_URL is not set.');
+  }
 
-const connectDB = async () => {
-    try {
-        if (!uri) {
-            console.error("MONGO_URI not found in environment variables.");
-            process.exit(1);
-        }
-        await mongoose.connect(uri, clientOptions);
-        console.log("MongoDB connected successfully!");
-    } catch (error) {
-        console.error("MongoDB Connection Error:", error);
-        process.exit(1);
-    }
-};
+  const sql = neon(databaseUrl);
+  await sql`SELECT 1`;
+  await sql`
+    CREATE TABLE IF NOT EXISTS books (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(255) NOT NULL,
+      author VARCHAR(255),
+      publication_year INT,
+      in_stock BOOLEAN DEFAULT TRUE
+    );
+  `;
 
-module.exports = connectDB;
+  await sql`
+    INSERT INTO books (title, author, publication_year, in_stock)
+    SELECT 'The Hobbit', 'J.R.R. Tolkien', 1937, TRUE
+    WHERE NOT EXISTS (
+      SELECT 1 FROM books WHERE title = 'The Hobbit'
+    );
+  `;
+  await sql`
+    INSERT INTO books (title, author, publication_year, in_stock)
+    SELECT '1984', 'George Orwell', 1949, TRUE
+    WHERE NOT EXISTS (
+      SELECT 1 FROM books WHERE title = '1984'
+    );
+  `;
+
+  const [location] = await sql`
+    SELECT current_database() AS database, current_schema() AS schema;
+  `;
+  const tables = await sql`
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_schema = current_schema()
+      AND table_type = 'BASE TABLE'
+    ORDER BY table_name;
+  `;
+
+  console.log(
+    `Neon database connection established (${location.database}, schema: ${location.schema}).`
+  );
+  console.log(`Tables in schema: ${tables.map(({ table_name }) => table_name).join(', ')}`);
+}
+
+export default setup;
