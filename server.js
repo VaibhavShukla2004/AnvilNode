@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import setup from './config/db.js';
+import db from './config/db.js';
 
 
 // const equipmentRoutes = require('./routes/equipment.routes');
@@ -26,7 +26,8 @@ app.get('/', (req, res) => {
 
 async function startServer() {
   try {
-    await setup();
+    await db.query("SELECT 1"); // Test the database connection
+    console.log('Connected to Neon database successfully');
   } catch (error) {
     console.error('Failed to initialize Neon database:', error);
     process.exitCode = 1;
