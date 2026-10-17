@@ -1,12 +1,12 @@
-import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
-import db from './config/db.js';
 
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import db from "./config/db.js";
 
-// const equipmentRoutes = require('./routes/equipment.routes');
-// const muscleGroupRoutes = require('./routes/muscleGroup.routes');
-// const exerciseRoutes = require('./routes/exercise.routes');
+import equipmentRoutes from "./routes/equipment.routes.js";
+import muscleGroupRoutes from "./routes/muscleGroup.routes.js";
+import exerciseRoutes from "./routes/exercise.routes.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,29 +14,26 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Routes
-// app.use('/api/equipments', equipmentRoutes);
-// app.use('/api/muscle-groups', muscleGroupRoutes);
-// app.use('/api/exercises', exerciseRoutes);
+app.use("/api/equipments", equipmentRoutes);
+app.use("/api/muscle-groups", muscleGroupRoutes);
+app.use("/api/exercises", exerciseRoutes);
 
-// Root Health Check Route
-app.get('/', (req, res) => {
-  res.json({ message: 'AnvilNode API Server is running' });
+app.get("/", (req, res) => {
+  res.json({ message: "AnvilNode API Server is running" });
 });
 
 async function startServer() {
   try {
-    await db.query("SELECT 1"); // Test the database connection
-    console.log('Connected to Neon database successfully');
-  } catch (error) {
-    console.error('Failed to initialize Neon database:', error);
-    process.exitCode = 1;
-    return;
-  }
+    await db.query("SELECT 1");
+    console.log("PostgreSQL connection established.");
 
-  app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-  });
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to PostgreSQL:", error);
+    process.exitCode = 1;
+  }
 }
 
 startServer();

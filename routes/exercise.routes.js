@@ -1,11 +1,20 @@
-const express = require('express');
+
+import express from "express";
+
+import {
+  createExercise,
+  getExercises,
+  getExerciseById,
+  updateExercise,
+  deleteExercise,
+} from "../controllers/exercise.controller.js";
+
 const router = express.Router();
-const exerciseController = require('../controllers/exercise.controller');
 
-router.post('/', exerciseController.createExercise);
-router.get('/', exerciseController.getExercises);
-router.get('/:id', exerciseController.getExerciseById);
-router.put('/:id', exerciseController.updateExercise);
-router.delete('/:id', exerciseController.deleteExercise);
+router.post("/", createExercise);
+router.get("/", getExercises);
+router.get("/:id", getExerciseById);
+router.put("/:id", updateExercise);
+router.delete("/:id", deleteExercise);
 
-module.exports = router;
+export default router;

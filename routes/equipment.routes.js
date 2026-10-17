@@ -1,11 +1,19 @@
-const express = require('express');
+import express from "express";
+
+import {
+  createEquipment,
+  getEquipments,
+  getEquipmentById,
+  updateEquipment,
+  deleteEquipment,
+} from "../controllers/equipment.controller.js";
+
 const router = express.Router();
-const equipmentController = require('../controllers/equipment.controller');
 
-router.post('/', equipmentController.createEquipment);
-router.get('/', equipmentController.getEquipments);
-router.get('/:id', equipmentController.getEquipmentById);
-router.put('/:id', equipmentController.updateEquipment);
-router.delete('/:id', equipmentController.deleteEquipment);
+router.post("/", createEquipment);
+router.get("/", getEquipments);
+router.get("/:id", getEquipmentById);
+router.put("/:id", updateEquipment);
+router.delete("/:id", deleteEquipment);
 
-module.exports = router;
+export default router;

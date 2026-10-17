@@ -33,14 +33,15 @@ An exercise can target multiple muscle groups and may require equipment.
 | Field | Description | Constraints / remarks |
 |---|---|---|
 | `name` | Name of the muscle group. | |
-| `imageUrl` | URL of an image for the muscle group. | |
+| `imageUrl` | URL of an image for the muscle group. | | 
 
 ### Equipment
 
 | Field | Description | Constraints / remarks |
 |---|---|---|
 | `name` | Name of the equipment. | |
-| `imageUrl` | URL of an image for the equipment. | |
+| `imageUrl` | URL of an image for the equipment. | | 
+| `Tag` | Equipment is available at the gym, or in a park or both. | |
 
 
 ## Algorithm
@@ -55,3 +56,6 @@ can create upto 10 workouts
 
 ### User (Not Logged In)
 can only create one workout (temporary, will disappear if page reloaded)
+
+## Migrations
+pending migrations are applied with `npm run migrate`

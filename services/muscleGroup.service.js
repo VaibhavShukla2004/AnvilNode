@@ -1,29 +1,60 @@
-const MuscleGroup = require('../models/muscleGroup.model');
 
-class MuscleGroupService {
+import db from "../config/db.js";
+
+const muscleGroupService = {
   async create(data) {
-    const muscleGroup = new MuscleGroup(data);
-    return await muscleGroup.save();
-  }
+    const { name, imageUrl } = data;
+
+    const result = await db.query(
+      `INSERT INTO muscle_groups (name, image_url)
+       VALUES ($1, $2)
+       RETURNING *`,
+      [name, imageUrl ?? null]
+    );
+
+    return result.rows[0];
+  },
 
   async getAll() {
-    return await MuscleGroup.find({}).populate('primaryMuscleGroup', 'name isPrimary');
-  }
+    const result = await db.query(
+      "SELECT * FROM muscle_groups ORDER BY id"
+    );
+
+    return result.rows;
+  },
 
   async getById(id) {
-    return await MuscleGroup.findById(id).populate('primaryMuscleGroup', 'name isPrimary');
-  }
+    const result = await db.query(
+      "SELECT * FROM muscle_groups WHERE id = $1",
+      [id]
+    );
+
+    return result.rows[0] ?? null;
+  },
 
   async updateById(id, data) {
-    return await MuscleGroup.findByIdAndUpdate(id, data, {
-      new: true,
-      runValidators: true,
-    }).populate('primaryMuscleGroup', 'name isPrimary');
-  }
+    const { name, imageUrl } = data;
+
+    const result = await db.query(
+      `UPDATE muscle_groups
+       SET name = COALESCE($1, name),
+           image_url = COALESCE($2, image_url)
+       WHERE id = $3
+       RETURNING *`,
+      [name ?? null, imageUrl ?? null, id]
+    );
+
+    return result.rows[0] ?? null;
+  },
 
   async deleteById(id) {
-    return await MuscleGroup.findByIdAndDelete(id);
-  }
-}
+    const result = await db.query(
+      "DELETE FROM muscle_groups WHERE id = $1 RETURNING *",
+      [id]
+    );
 
-module.exports = new MuscleGroupService();
+    return result.rows[0] ?? null;
+  },
+};
+
+export default muscleGroupService;

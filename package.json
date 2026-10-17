@@ -8,7 +8,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "migrate": "knex migrate:latest --env development",
+    "rollback": "knex migrate:rollback --env development"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",
